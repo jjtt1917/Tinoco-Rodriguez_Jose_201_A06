@@ -235,8 +235,22 @@ Create three new data frames by slicing the data by state.
 No need to print any output here.
 
 ```{r}
+state_list <- c("CO", "OH", "VA")
 
+CO_df <- data.frame()
+OH_df <- data.frame()
+VA_df <- data.frame()
 
+for (state in state_list) {
+  state_df <- max_temps[max_temps$state == state, ]
+  if (state == "CO") {
+    CO_df <- state_df
+  } else if (state == "OH") {
+    OH_df <- state_df
+  } else if (state == "VA") {
+    VA_df <- state_df
+  }
+}
 ```
 
 
@@ -257,7 +271,16 @@ Example (this is NOT the answer just an example of what goes in the {}):
 Note: This code should still run successfully even if the numbers were to change.
 
 ```{r}
+CO_df$median_temp <- apply(CO_df[, 3:14], 1, median)
 
+year_max_median <- CO_df$year[which.max(CO_df$median_temp)]
+year_min_median <- CO_df$year[which.min(CO_df$median_temp)]
+
+sentence <- paste0("The maximum median annual temperature of ", CO_df$median_temp[which.max(CO_df$median_temp)],
+                   " occurred in ", year_max_median,
+                   " and the minimum median annual temperature of ", CO_df$median_temp[which.min(CO_df$median_temp)],
+                   " occurred in ", year_min_median, ".")
+print(sentence)
 ```
 
 

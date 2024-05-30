@@ -114,11 +114,11 @@ Add a new named element to the end of each player's list called `height`. The he
 Print the `player_info` list to prove you were successful.
 
 ```{r}
-player_info$MJ$height <- 78
-player_info$LJ$height <- 81  
-player_info$KB$height <- 78
-player_info$KA$height <- 86
-player_info$SO$height <- 85
+heights <- c(MJ = 78, LJ = 81, KB = 78, KA = 86, SO = 85)
+
+for (player in names(player_info)) {
+  player_info[[player]]$height <- heights[player]
+}
 
 print(player_info)
 ```
@@ -189,8 +189,8 @@ round_func <- function(x) {
   }
 }
 
-rounded_mat <- apply(mat_rand, 1:2, round_func)
-print(rounded_mat)
+round_mat <- apply(mat_rand, 1:2, round_func)
+print(round_mat)
 ```
 
 
@@ -214,7 +214,13 @@ max_temps <- read_tsv("state_max_temps.tsv") |>
 Calculate the average temperature for each month across the whole data frame (using the data for all three states together).
 
 ```{r}
+avg_temps <- apply(max_temps[, 3:14], 2, function(x) mean(x, na.rm = TRUE))
+avg_temps_df <- data.frame(
+  month = colnames(max_temps) [3:14],
+  average_temperature = avg_temps
+)
 
+print(avg_temps_df)
 ```
 
 
@@ -229,6 +235,7 @@ Create three new data frames by slicing the data by state.
 No need to print any output here.
 
 ```{r}
+
 
 ```
 
